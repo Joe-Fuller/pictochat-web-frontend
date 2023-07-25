@@ -27,7 +27,7 @@ export default function Chat({ username }) {
       <h2>Welcome, {username}!</h2>
       <div>
         {messages.map((message, index) => (
-          <div key={index}>{message}</div>
+          <div key={index} dangerouslySetInnerHTML={{ __html: message }} />
         ))}
       </div>
       <div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Canvas from "@/components/canvas";
 import Chat from "@/components/chat";
 import { useState, useEffect } from "react";
 
@@ -15,6 +16,7 @@ export default function Home() {
     <div>
       <h1>PictoChat</h1>
       <Chat username={username}></Chat>
+      <Canvas></Canvas>
     </div>
   );
 }
