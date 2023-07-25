@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import Message from "./message";
 
 const serverURL = "http://localhost:3000";
 
@@ -22,12 +23,7 @@ export default function ChatHistory() {
     <div>
       <ul>
         {chatMessages.map((message, index) => (
-          <li
-            key={index}
-            dangerouslySetInnerHTML={{
-              __html: `${message.nickname}: ${message.message}`,
-            }}
-          ></li>
+          <Message message={message}></Message>
         ))}
       </ul>
     </div>
