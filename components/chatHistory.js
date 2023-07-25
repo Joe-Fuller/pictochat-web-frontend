@@ -23,7 +23,7 @@ export default function ChatHistory() {
     <div>
       <ul>
         {chatMessages.map((message, index) => (
-          <Message message={message}></Message>
+          <Message key={index} message={message}></Message>
         ))}
       </ul>
     </div>
