@@ -19,7 +19,6 @@ export default function Canvas({ handleDrawingSend }) {
 
   const startDrawing = (e) => {
     isDrawingRef.current = true;
-    const canvas = canvasRef.current;
     const { offsetX, offsetY } = e.nativeEvent ? e.nativeEvent : e;
     lastPositionRef.current = { x: offsetX, y: offsetY };
   };
