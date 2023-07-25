@@ -9,12 +9,15 @@ export default function MessageInput({ nickname }) {
   const socket = io(serverURL);
 
   const handleMessageSend = () => {
-    socket.emit("message", `${nickname}: ${inputValue}`);
+    socket.emit("message", { nickname: nickname, message: inputValue });
     setInputValue("");
   };
 
   const handleDrawingSend = (dataURL) => {
-    socket.emit("message", `${nickname}: <img src="${dataURL}" />`);
+    socket.emit("message", {
+      nickname: nickname,
+      message: `<img src="${dataURL}" />`,
+    });
   };
 
   return (
