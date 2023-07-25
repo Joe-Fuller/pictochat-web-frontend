@@ -11,15 +11,9 @@ export default function Chat() {
   const socket = io(serverURL);
 
   useEffect(() => {
-    const messageListener = (message) => {
+    socket.on("message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
-    };
-
-    socket.on("message", messageListener);
-
-    return () => {
-      socket.off("message", messageListener);
-    };
+    });
   }, []);
 
   const handleMessageSend = () => {
