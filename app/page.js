@@ -1,21 +1,21 @@
 "use client";
 
 import Canvas from "@/components/canvas";
-import Chat from "@/components/chat";
+import ChatHistory from "@/components/chatHistory";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    const user = prompt("Enter your username:");
-    setUsername(user);
+    const nick = prompt("Enter your nickname:");
+    setNickname(nick);
   }, []);
 
   return (
     <div>
       <h1>PictoChat</h1>
-      <Chat username={username}></Chat>
+      <ChatHistory></ChatHistory>
       <Canvas></Canvas>
     </div>
   );
