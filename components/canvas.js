@@ -38,7 +38,8 @@ export default function Canvas({ handleDrawingSend }) {
   const handleSendDrawing = () => {
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL("image/png");
-
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
     handleDrawingSend(dataURL);
   };
 
