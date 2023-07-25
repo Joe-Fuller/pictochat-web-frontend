@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Message from "./message";
 
-const serverURL = "http://localhost:3000";
+const serverURL = "https://alike-easy-nightingale.glitch.me/";
 
 export default function ChatHistory() {
   const [chatMessages, setChatMessages] = useState([]);

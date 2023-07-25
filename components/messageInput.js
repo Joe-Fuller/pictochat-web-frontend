@@ -2,7 +2,7 @@ import { useState } from "react";
 import io from "socket.io-client";
 import DrawingArea from "./drawingArea";
 
-const serverURL = "http://localhost:3000";
+const serverURL = "https://alike-easy-nightingale.glitch.me/";
 
 export default function MessageInput({ nickname }) {
   const [inputValue, setInputValue] = useState("");
