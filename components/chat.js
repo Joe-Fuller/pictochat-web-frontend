@@ -5,7 +5,7 @@ import io from "socket.io-client";
 
 const serverURL = "http://localhost:3000";
 
-export default function Chat() {
+export default function Chat({ username }) {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const socket = io(serverURL);
@@ -17,12 +17,14 @@ export default function Chat() {
   }, []);
 
   const handleMessageSend = () => {
-    socket.emit("message", inputValue);
+    const messageWithUsername = `${username}: ${inputValue}`;
+    socket.emit("message", messageWithUsername);
     setInputValue("");
   };
 
   return (
     <div>
+      <h2>Welcome, {username}!</h2>
       <div>
         {messages.map((message, index) => (
           <div key={index}>{message}</div>
