@@ -32,6 +32,7 @@ export default function Home() {
       </div>
       <div>
         <input
+          className="text-black"
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
