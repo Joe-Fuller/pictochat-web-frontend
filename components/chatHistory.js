@@ -22,7 +22,7 @@ export default function ChatHistory() {
     <div>
       <ul>
         {chatMessages.map((message, index) => (
-          <li key={index}>{message}</li>
+          <li key={index} dangerouslySetInnerHTML={{ __html: message }}></li>
         ))}
       </ul>
     </div>

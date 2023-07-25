@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function Canvas() {
+export default function Canvas({ handleDrawingSend }) {
   const canvasRef = useRef(null);
   const isDrawingRef = useRef(false);
   const lastPositionRef = useRef({ x: 0, y: 0 });
@@ -36,6 +36,13 @@ export default function Canvas() {
     draw(context, offsetX, offsetY);
   };
 
+  const handleSendDrawing = () => {
+    const canvas = canvasRef.current;
+    const dataURL = canvas.toDataURL("image/png");
+
+    handleDrawingSend(dataURL);
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -61,11 +68,14 @@ export default function Canvas() {
   }, [isDrawingRef.current]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      height={300}
-      width={400}
-      style={{ border: "1px solid black", backgroundColor: "white" }}
-    ></canvas>
+    <div>
+      <canvas
+        ref={canvasRef}
+        height={300}
+        width={400}
+        style={{ border: "1px solid black", backgroundColor: "white" }}
+      ></canvas>
+      <button onClick={handleSendDrawing}>Send Drawing</button>
+    </div>
   );
 }

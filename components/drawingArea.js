@@ -5,27 +5,15 @@ import Canvas from "./canvas";
 const serverURL = "http://localhost:3000";
 
 export default function DrawingArea() {
-  const socket = useRef(null);
+  const socket = io(serverURL);
 
-  useEffect(() => {
-    socket.current = io(serverURL);
-
-    socket.current.on("drawing", (drawingData) => {});
-
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
-  }, []);
-
-  const handleDrawing = (drawingData) => {
-    socket.current.emit("drawing", drawingData);
+  const handleDrawingSend = (dataURL) => {
+    socket.emit("message", `<img src="${dataURL}" />`);
   };
 
   return (
     <div>
-      <Canvas></Canvas>
+      <Canvas handleDrawingSend={handleDrawingSend}></Canvas>
     </div>
   );
 }
