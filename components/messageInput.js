@@ -13,6 +13,10 @@ export default function MessageInput({ nickname }) {
     setInputValue("");
   };
 
+  const handleDrawingSend = (dataURL) => {
+    socket.emit("message", `${nickname}: <img src="${dataURL}" />`);
+  };
+
   return (
     <div>
       <input
@@ -22,7 +26,7 @@ export default function MessageInput({ nickname }) {
         onChange={(e) => setInputValue(e.target.value)}
       />
       <button onClick={handleMessageSend}>Send</button>
-      <DrawingArea></DrawingArea>
+      <DrawingArea handleDrawingSend={handleDrawingSend}></DrawingArea>
     </div>
   );
 }
