@@ -74,13 +74,14 @@ export default function Canvas({ handleDrawingSend }) {
 
   const colourOptions = [
     "black",
+    "white",
     "red",
-    "blue",
-    "green",
-    "yellow",
-    "purple",
     "orange",
-    "pink",
+    "yellow",
+    "green",
+    "blue",
+    "indigo",
+    "violet",
   ];
 
   return (
