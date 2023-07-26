@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useRef } from "react";
 import io from "socket.io-client";
 import Message from "./message";
 
@@ -30,12 +30,22 @@ const userColoursReducer = (state, action) => {
 export default function ChatHistory() {
   const [chatMessages, setChatMessages] = useState([]);
   const [userColours, dispatch] = useReducer(userColoursReducer, {});
+  const chatContainerRef = useRef(null);
 
   useEffect(() => {
     const socket = io(serverURL);
 
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
+      }
+    };
+
     socket.on("message", (message) => {
       setChatMessages((prevMessages) => [...prevMessages, message]);
+
+      scrollToBottom();
 
       const { nickname } = message;
       if (!userColours[nickname]) {
@@ -51,7 +61,7 @@ export default function ChatHistory() {
   }, [userColours]);
 
   return (
-    <div>
+    <div ref={chatContainerRef} className="overflow-y-scroll">
       <ul>
         {chatMessages.map((message, index) => (
           <Message
