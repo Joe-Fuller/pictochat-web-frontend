@@ -1,15 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Canvas({ handleDrawingSend }) {
   const canvasRef = useRef(null);
   const isDrawingRef = useRef(false);
   const lastPositionRef = useRef({ x: 0, y: 0 });
   const offscreenCanvasRef = useRef(null);
+  const [selectedColour, setSelectedColour] = useState("black");
 
   const draw = (ctx, x, y) => {
     ctx.lineWidth = 4;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = selectedColour;
     ctx.beginPath();
     ctx.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
     ctx.lineTo(x, y);
@@ -43,6 +44,10 @@ export default function Canvas({ handleDrawingSend }) {
     handleDrawingSend(dataURL);
   };
 
+  const handleSelectColour = (colour) => {
+    setSelectedColour(colour);
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -59,7 +64,7 @@ export default function Canvas({ handleDrawingSend }) {
       canvas.removeEventListener("mouseup", stopDrawing);
       canvas.removeEventListener("mousemove", handleDrawing);
     };
-  }, []);
+  }, [selectedColour]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -67,13 +72,36 @@ export default function Canvas({ handleDrawingSend }) {
     offscreenContext.drawImage(canvas, 0, 0);
   }, [isDrawingRef.current]);
 
+  const colourOptions = [
+    "black",
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "purple",
+    "orange",
+    "pink",
+  ];
+
   return (
     <div>
+      <div className="flex">
+        {colourOptions.map((colour) => (
+          <div
+            key={colour}
+            className={`w-8 h-8 rounded cursor-pointer ${
+              colour === selectedColour ? "border-2 border-white" : ""
+            }`}
+            style={{ backgroundColor: colour }}
+            onClick={() => handleSelectColour(colour)}
+          />
+        ))}
+      </div>
       <canvas
+        className="border-1 border-black bg-white"
         ref={canvasRef}
         height={300}
         width={400}
-        style={{ border: "1px solid black", backgroundColor: "white" }}
       ></canvas>
       <button onClick={handleSendDrawing}>Send Drawing</button>
     </div>
