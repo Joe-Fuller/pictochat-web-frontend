@@ -13,10 +13,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <h1>PictoChat</h1>
-      <ChatHistory></ChatHistory>
-      <MessageInput nickname={nickname}></MessageInput>
+    <div className="flex flex-col h-screen">
+      <h1 className="text-2xl font-bold py-4">PictoChat</h1>
+      <div className="flex-1 overflow-y-scroll">
+        <ChatHistory />
+      </div>
+      <MessageInput nickname={nickname} className="bg-white p-4" />
     </div>
   );
 }
