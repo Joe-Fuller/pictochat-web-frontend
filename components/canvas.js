@@ -6,9 +6,10 @@ export default function Canvas({ handleDrawingSend }) {
   const lastPositionRef = useRef({ x: 0, y: 0 });
   const offscreenCanvasRef = useRef(null);
   const [selectedColour, setSelectedColour] = useState("black");
+  const [lineWidth, setLineWidth] = useState(4);
 
   const draw = (ctx, x, y) => {
-    ctx.lineWidth = 4;
+    ctx.lineWidth = lineWidth;
     ctx.lineCap = "round";
     ctx.strokeStyle = selectedColour;
     ctx.beginPath();
@@ -48,6 +49,10 @@ export default function Canvas({ handleDrawingSend }) {
     setSelectedColour(colour);
   };
 
+  const handleSelectLineWidth = (newLineWidth) => {
+    setLineWidth(newLineWidth);
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -64,7 +69,7 @@ export default function Canvas({ handleDrawingSend }) {
       canvas.removeEventListener("mouseup", stopDrawing);
       canvas.removeEventListener("mousemove", handleDrawing);
     };
-  }, [selectedColour]);
+  }, [selectedColour, lineWidth]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -83,6 +88,8 @@ export default function Canvas({ handleDrawingSend }) {
     "indigo",
     "violet",
   ];
+
+  const lineWidthOptions = [2, 4, 6, 8, 10, 12, 14, 16, 18];
 
   return (
     <div className="flex">
@@ -108,6 +115,30 @@ export default function Canvas({ handleDrawingSend }) {
         height={300}
         width={500}
       ></canvas>
+      <div className="flex-col">
+        {lineWidthOptions.map((width) => (
+          <div
+            key={width}
+            className={`w-8 h-8 rounded cursor-pointer  ${
+              selectedColour === "white" || selectedColour === "yellow"
+                ? "bg-black"
+                : "bg-white"
+            } ${width === lineWidth ? "border-2 border-black" : ""}`}
+            onClick={() => handleSelectLineWidth(width)}
+          >
+            <div
+              className="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              style={{
+                width: `${width}px`,
+                height: `${width}px`,
+                borderRadius: "50%",
+                backgroundColor: selectedColour,
+              }}
+            />
+          </div>
+        ))}
+      </div>
+
       <button onClick={handleSendDrawing}>Send Drawing</button>
     </div>
   );
