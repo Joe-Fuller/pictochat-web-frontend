@@ -85,8 +85,8 @@ export default function Canvas({ handleDrawingSend }) {
   ];
 
   return (
-    <div>
-      <div className="flex">
+    <div className="flex">
+      <div className="flex-col">
         {colourOptions.map((colour) => (
           <div
             key={colour}
