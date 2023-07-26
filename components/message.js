@@ -1,6 +1,6 @@
 export default function Message({ message, colours }) {
   return (
-    <li
+    <div
       className={`relative bg-white ${colours.borderColour} border-4 rounded-lg mb-2 text-black z-10`}
     >
       <div
@@ -12,6 +12,6 @@ export default function Message({ message, colours }) {
         className="pl-8"
         dangerouslySetInnerHTML={{ __html: message.message }}
       ></div>
-    </li>
+    </div>
   );
 }

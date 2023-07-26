@@ -31,21 +31,13 @@ export default function ChatHistory() {
   const [chatMessages, setChatMessages] = useState([]);
   const [userColours, dispatch] = useReducer(userColoursReducer, {});
   const chatContainerRef = useRef(null);
+  const lastMessageRef = useRef(null);
 
   useEffect(() => {
     const socket = io(serverURL);
 
-    const scrollToBottom = () => {
-      if (chatContainerRef.current) {
-        chatContainerRef.current.scrollTop =
-          chatContainerRef.current.scrollHeight;
-      }
-    };
-
     socket.on("message", (message) => {
       setChatMessages((prevMessages) => [...prevMessages, message]);
-
-      scrollToBottom();
 
       const { nickname } = message;
       if (!userColours[nickname]) {
@@ -60,15 +52,23 @@ export default function ChatHistory() {
     };
   }, [userColours]);
 
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chatMessages]);
+
   return (
     <div ref={chatContainerRef} className="overflow-y-scroll">
       <ul>
         {chatMessages.map((message, index) => (
-          <Message
-            key={index}
-            message={message}
-            colours={userColours[message.nickname]}
-          ></Message>
+          <li key={index}>
+            <Message
+              message={message}
+              colours={userColours[message.nickname]}
+            ></Message>
+            {index === chatMessages.length - 1 && <div ref={lastMessageRef} />}
+          </li>
         ))}
       </ul>
     </div>
