@@ -1,7 +1,11 @@
-export default function Message({ message }) {
+export default function Message({ message, colours }) {
   return (
-    <li className="relative bg-white border-red-600 border-2 rounded-lg p-2 mb-2 text-black">
-      <div className="absolute top-0 left-0 pl-1 bg-red-400 text-sm font-semibold rounded-br-md rounded-tl border-2 border-red-600">
+    <li
+      className={`relative bg-white ${colours.borderColour} border-2 rounded-lg p-2 mb-2 text-black z-10`}
+    >
+      <div
+        className={`absolute top-0 left-0 px-1 ${colours.bgColour} text-sm font-semibold rounded-br-md rounded-tl border-r-2 border-b-2 ${colours.borderColour} z-0`}
+      >
         {message.nickname}
       </div>
       <div
