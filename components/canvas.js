@@ -91,7 +91,11 @@ export default function Canvas({ handleDrawingSend }) {
           <div
             key={colour}
             className={`w-8 h-8 rounded cursor-pointer ${
-              colour === selectedColour ? "border-2 border-white" : ""
+              colour === selectedColour
+                ? colour === "white"
+                  ? "border-2 border-black"
+                  : "border-2 border-white"
+                : ""
             }`}
             style={{ backgroundColor: colour }}
             onClick={() => handleSelectColour(colour)}
