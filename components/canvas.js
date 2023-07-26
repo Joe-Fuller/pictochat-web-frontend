@@ -102,7 +102,7 @@ export default function Canvas({ handleDrawingSend }) {
         className="border-1 border-black bg-white"
         ref={canvasRef}
         height={300}
-        width={400}
+        width={500}
       ></canvas>
       <button onClick={handleSendDrawing}>Send Drawing</button>
     </div>
