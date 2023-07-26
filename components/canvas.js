@@ -92,54 +92,60 @@ export default function Canvas({ handleDrawingSend }) {
   const lineWidthOptions = [2, 4, 6, 8, 10, 12, 14, 16, 18];
 
   return (
-    <div className="flex">
-      <div className="flex-col">
-        {colourOptions.map((colour) => (
-          <div
-            key={colour}
-            className={`w-8 h-8 rounded cursor-pointer ${
-              colour === selectedColour
-                ? colour === "white"
-                  ? "border-2 border-black"
-                  : "border-2 border-white"
-                : ""
-            }`}
-            style={{ backgroundColor: colour }}
-            onClick={() => handleSelectColour(colour)}
-          />
-        ))}
-      </div>
-      <canvas
-        className="border-1 border-black bg-white"
-        ref={canvasRef}
-        height={300}
-        width={500}
-      ></canvas>
-      <div className="flex-col">
-        {lineWidthOptions.map((width) => (
-          <div
-            key={width}
-            className={`w-8 h-8 rounded cursor-pointer  ${
-              selectedColour === "white" || selectedColour === "yellow"
-                ? "bg-black"
-                : "bg-white"
-            } ${width === lineWidth ? "border-2 border-black" : ""}`}
-            onClick={() => handleSelectLineWidth(width)}
-          >
+    <div>
+      <button
+        onClick={handleSendDrawing}
+        className="block mx-auto bg-blue-500 text-white px-4 py-2 rounded mt-4"
+      >
+        ^ Send Drawing ^
+      </button>
+      <div className="flex">
+        <div className="flex-col">
+          {colourOptions.map((colour) => (
             <div
-              className="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              style={{
-                width: `${width}px`,
-                height: `${width}px`,
-                borderRadius: "50%",
-                backgroundColor: selectedColour,
-              }}
+              key={colour}
+              className={`w-8 h-8 rounded cursor-pointer ${
+                colour === selectedColour
+                  ? colour === "white"
+                    ? "border-2 border-black"
+                    : "border-2 border-white"
+                  : ""
+              }`}
+              style={{ backgroundColor: colour }}
+              onClick={() => handleSelectColour(colour)}
             />
-          </div>
-        ))}
+          ))}
+        </div>
+        <canvas
+          className="border-1 border-black bg-white"
+          ref={canvasRef}
+          height={300}
+          width={500}
+        ></canvas>
+        <div className="flex-col">
+          {lineWidthOptions.map((width) => (
+            <div
+              key={width}
+              className={`w-8 h-8 rounded cursor-pointer  ${
+                selectedColour === "white" || selectedColour === "yellow"
+                  ? "bg-black"
+                  : "bg-white"
+              } ${width === lineWidth ? "border-2 border-black" : ""}`}
+              onClick={() => handleSelectLineWidth(width)}
+            >
+              <div
+                className="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                style={{
+                  width: `${width}px`,
+                  height: `${width}px`,
+                  borderRadius: "50%",
+                  backgroundColor: selectedColour,
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-
-      <button onClick={handleSendDrawing}>Send Drawing</button>
     </div>
   );
 }
