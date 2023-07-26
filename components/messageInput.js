@@ -22,13 +22,13 @@ export default function MessageInput({ nickname }) {
 
   return (
     <div>
-      <input
+      {/* <input
         className="text-black"
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <button onClick={handleMessageSend}>Send</button>
+      <button onClick={handleMessageSend}>Send</button> */}
       <DrawingArea handleDrawingSend={handleDrawingSend}></DrawingArea>
     </div>
   );
