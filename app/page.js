@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen mobile:min-h-full">
       <h1 className="text-2xl font-bold py-4">PictoChat</h1>
-      <ChatHistory chatMessages={chatMessages} userColours={userColours} />
+      <ChatHistory />
       <div className="flex-grow" />
       <MessageInput
         nickname={nickname}
