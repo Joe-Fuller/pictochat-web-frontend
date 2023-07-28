@@ -139,9 +139,9 @@ export default function Canvas({ handleDrawingSend }) {
         ^ Send Drawing ^
       </button>
       <div className="flex">
-        {!isMobile && (
-          <div className="flex-col">
-            {colourOptions.map((colour) => (
+        <div className={`${isMobile ? "flex-col" : "flex-row"}`}>
+          {isMobile &&
+            colourOptions.map((colour) => (
               <div
                 key={colour}
                 className={`w-8 h-8 rounded cursor-pointer ${
@@ -155,17 +155,14 @@ export default function Canvas({ handleDrawingSend }) {
                 onClick={() => handleSelectColour(colour)}
               />
             ))}
-          </div>
-        )}
-        <canvas
-          className="border-1 border-black bg-white"
-          ref={canvasRef}
-          height={300}
-          width={500}
-        ></canvas>
-        {isMobile && (
-          <div className="flex-col">
-            {colourOptions.map((colour) => (
+          <canvas
+            className="border-1 border-black bg-white"
+            ref={canvasRef}
+            height={300}
+            width={500}
+          ></canvas>
+          {isMobile &&
+            colourOptions.map((colour) => (
               <div
                 key={colour}
                 className={`w-8 h-8 rounded cursor-pointer ${
@@ -179,8 +176,7 @@ export default function Canvas({ handleDrawingSend }) {
                 onClick={() => handleSelectColour(colour)}
               />
             ))}
-          </div>
-        )}
+        </div>
         <div className="flex-col">
           {lineWidthOptions.map((width) => (
             <div
