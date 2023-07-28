@@ -114,7 +114,21 @@ export default function Canvas({ handleDrawingSend }) {
 
   const lineWidthOptions = [2, 4, 6, 8, 10, 12, 14, 16, 18];
 
-  const isMobile = window.innerWidth <= 640;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+
+    window.addEventListener("resize", checkIsMobile);
+
+    checkIsMobile();
+
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
+  }, []);
 
   return (
     <div>
@@ -125,7 +139,6 @@ export default function Canvas({ handleDrawingSend }) {
         ^ Send Drawing ^
       </button>
       <div className="flex">
-        {/* Move the selectors to the bottom on mobile */}
         {!isMobile && (
           <div className="flex-col">
             {colourOptions.map((colour) => (
@@ -150,7 +163,6 @@ export default function Canvas({ handleDrawingSend }) {
           height={300}
           width={500}
         ></canvas>
-        {/* Move the selectors to the bottom on mobile */}
         {isMobile && (
           <div className="flex-col">
             {colourOptions.map((colour) => (
