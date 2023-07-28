@@ -114,6 +114,8 @@ export default function Canvas({ handleDrawingSend }) {
 
   const lineWidthOptions = [2, 4, 6, 8, 10, 12, 14, 16, 18];
 
+  const isMobile = window.innerWidth <= 640;
+
   return (
     <div>
       <button
@@ -123,28 +125,50 @@ export default function Canvas({ handleDrawingSend }) {
         ^ Send Drawing ^
       </button>
       <div className="flex">
-        <div className="flex-col">
-          {colourOptions.map((colour) => (
-            <div
-              key={colour}
-              className={`w-8 h-8 rounded cursor-pointer ${
-                colour === selectedColour
-                  ? colour === "white"
-                    ? "border-2 border-black"
-                    : "border-2 border-white"
-                  : ""
-              }`}
-              style={{ backgroundColor: colour }}
-              onClick={() => handleSelectColour(colour)}
-            />
-          ))}
-        </div>
+        {/* Move the selectors to the bottom on mobile */}
+        {!isMobile && (
+          <div className="flex-col">
+            {colourOptions.map((colour) => (
+              <div
+                key={colour}
+                className={`w-8 h-8 rounded cursor-pointer ${
+                  colour === selectedColour
+                    ? colour === "white"
+                      ? "border-2 border-black"
+                      : "border-2 border-white"
+                    : ""
+                }`}
+                style={{ backgroundColor: colour }}
+                onClick={() => handleSelectColour(colour)}
+              />
+            ))}
+          </div>
+        )}
         <canvas
           className="border-1 border-black bg-white"
           ref={canvasRef}
           height={300}
           width={500}
         ></canvas>
+        {/* Move the selectors to the bottom on mobile */}
+        {isMobile && (
+          <div className="flex-col">
+            {colourOptions.map((colour) => (
+              <div
+                key={colour}
+                className={`w-8 h-8 rounded cursor-pointer ${
+                  colour === selectedColour
+                    ? colour === "white"
+                      ? "border-2 border-black"
+                      : "border-2 border-white"
+                    : ""
+                }`}
+                style={{ backgroundColor: colour }}
+                onClick={() => handleSelectColour(colour)}
+              />
+            ))}
+          </div>
+        )}
         <div className="flex-col">
           {lineWidthOptions.map((width) => (
             <div
