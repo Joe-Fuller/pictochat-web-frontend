@@ -13,11 +13,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen mobile:min-h-full overflow-hidden">
+    <div className="flex flex-col justify-center items-center min-h-screen mobile:min-h-full">
       <h1 className="text-2xl font-bold py-4">PictoChat</h1>
-      <ChatHistory />
-      <div className="flex-grow"> </div>
-      <MessageInput nickname={nickname} className="bg-white p-4" />
+      <ChatHistory chatMessages={chatMessages} userColours={userColours} />
+      <div className="flex-grow" />
+      <MessageInput
+        nickname={nickname}
+        className="bg-white p-4 overflow-hidden mobile:overflow-y-auto"
+      />
     </div>
   );
 }

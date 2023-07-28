@@ -40,6 +40,9 @@ body {
   .mobile\\:min-h-full {
     min-height: 100%;
   }
+  .mobile\\:overflow-y-auto {
+    overflow-y: auto;
+  }
   html,
   body {
     overflow-y: hidden;

@@ -59,14 +59,17 @@ export default function ChatHistory() {
   }, [chatMessages]);
 
   return (
-    <div ref={chatContainerRef} className="overflow-y-scroll">
+    <div
+      ref={chatContainerRef}
+      className="overflow-y-scroll mobile:overflow-y-auto max-h-[70vh] mb-4"
+    >
       <ul>
         {chatMessages.map((message, index) => (
           <li key={index}>
             <Message
               message={message}
               colours={userColours[message.nickname]}
-            ></Message>
+            />
             {index === chatMessages.length - 1 && <div ref={lastMessageRef} />}
           </li>
         ))}
