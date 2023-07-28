@@ -19,20 +19,30 @@ export default function Canvas({ handleDrawingSend }) {
     lastPositionRef.current = { x, y };
   };
 
-  const startDrawing = (x, y) => {
+  const startDrawing = (e) => {
+    e.preventDefault();
     isDrawingRef.current = true;
-    lastPositionRef.current = { x, y };
+    const { clientX, clientY } = e.touches ? e.touches[0] : e;
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+    const offsetX = clientX - canvasRect.left;
+    const offsetY = clientY - canvasRect.top;
+    lastPositionRef.current = { x: offsetX, y: offsetY };
   };
 
   const stopDrawing = () => {
     isDrawingRef.current = false;
   };
 
-  const handleDrawing = (x, y) => {
+  const handleDrawing = (e) => {
+    e.preventDefault();
     if (!isDrawingRef.current) return;
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    draw(context, x, y);
+    const { clientX, clientY } = e.touches ? e.touches[0] : e;
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+    const offsetX = clientX - canvasRect.left;
+    const offsetY = clientY - canvasRect.top;
+    draw(context, offsetX, offsetY);
   };
 
   const handleSendDrawing = () => {
@@ -58,30 +68,13 @@ export default function Canvas({ handleDrawingSend }) {
     offscreenCanvasRef.current.width = canvas.width;
     offscreenCanvasRef.current.height = canvas.height;
 
-    canvas.addEventListener("mousedown", (e) =>
-      startDrawing(e.nativeEvent.offsetX, e.nativeEvent.offsetY)
-    );
+    canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("mouseup", stopDrawing);
-    canvas.addEventListener("mousemove", (e) =>
-      handleDrawing(e.nativeEvent.offsetX, e.nativeEvent.offsetY)
-    );
+    canvas.addEventListener("mousemove", handleDrawing);
 
-    // Touch event handling for mobile devices
-    canvas.addEventListener("touchstart", (e) => {
-      const touch = e.touches[0];
-      startDrawing(
-        touch.pageX - touch.target.offsetLeft,
-        touch.pageY - touch.target.offsetTop
-      );
-    });
+    canvas.addEventListener("touchstart", startDrawing);
     canvas.addEventListener("touchend", stopDrawing);
-    canvas.addEventListener("touchmove", (e) => {
-      const touch = e.touches[0];
-      handleDrawing(
-        touch.pageX - touch.target.offsetLeft,
-        touch.pageY - touch.target.offsetTop
-      );
-    });
+    canvas.addEventListener("touchmove", handleDrawing);
 
     return () => {
       canvas.removeEventListener("mousedown", startDrawing);
@@ -114,22 +107,6 @@ export default function Canvas({ handleDrawingSend }) {
 
   const lineWidthOptions = [2, 4, 6, 8, 10, 12, 14, 16, 18];
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 640);
-    };
-
-    window.addEventListener("resize", checkIsMobile);
-
-    checkIsMobile();
-
-    return () => {
-      window.removeEventListener("resize", checkIsMobile);
-    };
-  }, []);
-
   return (
     <div>
       <button
@@ -138,50 +115,30 @@ export default function Canvas({ handleDrawingSend }) {
       >
         ^ Send Drawing ^
       </button>
-      <div className="flex">
-        {!isMobile && (
-          <div className="flex-col">
-            {colourOptions.map((colour) => (
-              <div
-                key={colour}
-                className={`w-8 h-8 rounded cursor-pointer ${
-                  colour === selectedColour
-                    ? colour === "white"
-                      ? "border-2 border-black"
-                      : "border-2 border-white"
-                    : ""
-                }`}
-                style={{ backgroundColor: colour }}
-                onClick={() => handleSelectColour(colour)}
-              />
-            ))}
-          </div>
-        )}
-        <canvas
-          className="border-1 border-black bg-white"
-          ref={canvasRef}
-          height={300}
-          width={500}
-        ></canvas>
-        {isMobile && (
-          <div className="flex-col">
-            {colourOptions.map((colour) => (
-              <div
-                key={colour}
-                className={`w-8 h-8 rounded cursor-pointer ${
-                  colour === selectedColour
-                    ? colour === "white"
-                      ? "border-2 border-black"
-                      : "border-2 border-white"
-                    : ""
-                }`}
-                style={{ backgroundColor: colour }}
-                onClick={() => handleSelectColour(colour)}
-              />
-            ))}
-          </div>
-        )}
-        <div className="flex-col">
+
+      {/* Color Selector */}
+      <div className="flex justify-center">
+        <div className="flex">
+          {colourOptions.map((colour) => (
+            <div
+              key={colour}
+              className={`w-8 h-8 rounded cursor-pointer ${
+                colour === selectedColour
+                  ? colour === "white"
+                    ? "border-2 border-black"
+                    : "border-2 border-white"
+                  : ""
+              }`}
+              style={{ backgroundColor: colour }}
+              onClick={() => handleSelectColour(colour)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Line Width Selector */}
+      <div className="flex justify-center">
+        <div className="flex">
           {lineWidthOptions.map((width) => (
             <div
               key={width}
@@ -205,6 +162,14 @@ export default function Canvas({ handleDrawingSend }) {
           ))}
         </div>
       </div>
+
+      {/* Canvas */}
+      <canvas
+        className="border-1 border-black bg-white"
+        ref={canvasRef}
+        height={300}
+        width={500}
+      ></canvas>
     </div>
   );
 }
