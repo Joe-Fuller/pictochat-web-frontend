@@ -23,7 +23,7 @@ export default function Home() {
       <div className="flex-shrink-0 flex justify-center">
         <MessageInput
           nickname={nickname}
-          className="bg-white p-4 overflow-hidden fixed bottom-0 left-0 right-0 w-full mobile:max-h-[70vh] mobile:overflow-y-auto"
+          className="p-4 overflow-hidden fixed bottom-0 mobile:max-h-[70vh] mobile:overflow-y-auto"
         />
       </div>
     </div>
