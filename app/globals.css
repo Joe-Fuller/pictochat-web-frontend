@@ -30,3 +30,9 @@ body {
   background-color: var(--secondary-color);
   color: #fff;
 }
+
+@media (max-width: 640px) {
+  .mobile\\:min-h-full {
+    min-height: 100%;
+  }
+}
