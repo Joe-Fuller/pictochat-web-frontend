@@ -13,7 +13,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center h-screen items-center min-h-screen mobile:overflow-hidden mobile:min-h-full">
+    <div className="flex flex-col justify-center items-center min-h-screen mobile:min-h-full overflow-hidden">
       <h1 className="text-2xl font-bold py-4">PictoChat</h1>
       <ChatHistory />
       <div className="flex-grow"> </div>

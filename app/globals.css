@@ -31,8 +31,17 @@ body {
   color: #fff;
 }
 
+/* Mobile goodness */
+.min-h-screen {
+  min-height: 100vh;
+}
+
 @media (max-width: 640px) {
   .mobile\\:min-h-full {
     min-height: 100%;
+  }
+  html,
+  body {
+    overflow-y: hidden;
   }
 }
